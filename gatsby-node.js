@@ -4,24 +4,23 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const eventPages = await graphql(`
     {
-      allContentfulBlogPost {
+      allContentfulBlog {
         edges {
           node {
             id
             slug
-            title
           }
         }
       }
     }
   `)
-  const singleBlogTemplate = path.resolve("src/templates/SingleBlog.js")
-  eventPages.data.allContentfulBlogPost.edges.map(edge => {
+  const blogTemplate = path.resolve("src/templates/Blog.js")
+  eventPages.data.allContentfulBlog.edges.map(edge => {
     // see edge logs in terminal
     console.log(edge)
     createPage({
       path: edge.node.slug,
-      component: singleBlogTemplate,
+      component: blogTemplate,
       context: {
         id: edge.node.id,
       },
